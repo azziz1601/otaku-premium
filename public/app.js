@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- LOAD GENRES ---
   async function loadGenres() {
     try {
-      const res = await fetch('/api/genres');
+      const res = await fetch('https://89d406b9efdc42.lhr.life/api/genres');
       const json = await res.json();
       if (json.success) {
         genresContainer.innerHTML = json.data.map(g => 
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loader.style.display = 'none';
     if(page === 1) { window.scrollTo(0,0); contentArea.innerHTML = '<h2 style="text-align:center;margin:2rem 0">Update Terbaru</h2>' + getSkeletonGrid(); }
     try {
-      const res = await fetch(`/api/anime?page=${page}`);
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/anime?page=${page}`);
       const json = await res.json();
       if (json.success) {
         let html = json.data.map(createCardHTML).join('');
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loader.style.display = 'none';
     if(page === 1) { window.scrollTo(0,0); contentArea.innerHTML = `<h2 style="text-align:center;margin:2rem 0">Hasil Pencarian: ${query}</h2>` + getSkeletonGrid(); }
     try {
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&page=${page}`); // Note: Backend may not support search pagination out of the box, but we'll try
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/search?q=${encodeURIComponent(query)}&page=${page}`); // Note: Backend may not support search pagination out of the box, but we'll try
       const json = await res.json();
       if (json.success) {
         let html = json.data.map(createCardHTML).join('');
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     contentArea.innerHTML = `<div style="text-align:center;margin:4rem 0">${getSkeletonGrid().split('</div>')[0]}</div>`; // fake loader
     
     try {
-      const res = await fetch(`/api/detail?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/detail?url=${encodeURIComponent(url)}`);
       const json = await res.json();
       if (json.success) {
         const d = json.data;
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
     contentArea.innerHTML = `<div style="text-align:center;margin:4rem 0">${getSkeletonGrid().split('</div>')[0]}</div>`;
     try {
-      const res = await fetch(`/api/episode?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/episode?url=${encodeURIComponent(url)}`);
       const json = await res.json();
       if (json.success) {
         const d = json.data;
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loader.style.display = 'none';
     if(page === 1) { window.scrollTo(0,0); contentArea.innerHTML = `<h2 style="text-align:center;margin:2rem 0">Genre: ${title}</h2>` + getSkeletonGrid(); }
     try {
-      const res = await fetch(`/api/genre-detail?url=${encodeURIComponent(url)}&page=${page}`);
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/genre-detail?url=${encodeURIComponent(url)}&page=${page}`);
       const json = await res.json();
       if (json.success) {
         let html = json.data.map(createCardHTML).join('');
@@ -314,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.scrollTo(0, 0);
     contentArea.innerHTML = `<h2 style="text-align:center;margin:2rem 0">Jadwal Rilis Anime On-Going</h2><div style="text-align:center">${getSkeletonGrid().split('</div>')[0]}</div>`;
     try {
-      const res = await fetch(`/api/schedule`);
+      const res = await fetch(`https://89d406b9efdc42.lhr.life/api/schedule`);
       const json = await res.json();
       if (json.success) {
         const scheduleHTML = json.data.map(dayInfo => `
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
       liveSearchResults.style.display = 'flex';
       liveSearchResults.innerHTML = '<div style="padding:1rem;text-align:center">Mencari...</div>';
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+        const res = await fetch(`https://89d406b9efdc42.lhr.life/api/search?q=${encodeURIComponent(q)}`);
         const json = await res.json();
         if (json.success && json.data.length > 0) {
           liveSearchResults.innerHTML = json.data.slice(0,5).map(a => `
