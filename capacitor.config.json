@@ -1,6 +1,6 @@
 {
-  "appId": "com.zenimeku.standalone",
-  "appName": "ZenimekuStandalone",
+  "appId": "com.zenimeku.app",
+  "appName": "Zenimeku",
   "webDir": "public",
   "plugins": {
     "CapacitorHttp": {

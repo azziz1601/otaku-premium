@@ -28,7 +28,10 @@ jobs:
       run: npm install
 
     - name: Sync Capacitor Android
-      run: npx cap sync android
+      run: |
+        npm install @capacitor/assets
+        npx -y @capacitor/assets generate --iconBackgroundColor '#121212' --splashBackgroundColor '#121212'
+        npx cap sync android
 
     - name: Build APK (Debug)
       working-directory: ./android
