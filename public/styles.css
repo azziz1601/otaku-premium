@@ -133,3 +133,31 @@ footer { margin-top: auto; text-align: center; padding: 2rem 0; font-size: 0.9re
 .action-btn:hover { background: var(--accent-hover); transform: translateY(-2px); }
 .action-btn.secondary { background: rgba(255,255,255,0.1); }
 .action-btn.secondary:hover { background: rgba(255,255,255,0.2); }
+
+/* Mobile Fixes */
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .search-bar {
+    width: 100%;
+  }
+  .search-bar input {
+    width: 100%;
+    flex: 1;
+  }
+  .genres-container {
+    margin-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+  }
+}
