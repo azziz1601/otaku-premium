@@ -125,6 +125,19 @@ object Scraper {
                 streamUrl = "https:$streamUrl"
             }
             
+            // Resolve desustream json directly to avoid WebView double-iframe fetch issues
+            if (streamUrl.contains("desustream.info") || streamUrl.contains("ondesu")) {
+                try {
+                    val jsonUrl = if (streamUrl.contains("?")) "$streamUrl&mode=json" else "$streamUrl?mode=json"
+                    val jsonDoc = getDocument(jsonUrl)
+                    val jsonText = jsonDoc.body().text()
+                    val matcher = java.util.regex.Pattern.compile("\"video\"\\s*:\\s*\"([^\"]+)\"").matcher(jsonText)
+                    if (matcher.find()) {
+                        streamUrl = matcher.group(1).replace("\\/", "/")
+                    }
+                } catch (e: Exception) { e.printStackTrace() }
+            }
+            
             var next: String? = null
             var prev: String? = null
             var all: String? = null
