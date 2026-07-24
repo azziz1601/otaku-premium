@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Otaku Premium</string>
-    <string name="title_activity_main">Otaku Premium</string>
+    <string name="app_name">Zenimeku</string>
+    <string name="title_activity_main">Zenimeku</string>
     <string name="package_name">com.otakudesu.app</string>
     <string name="custom_url_scheme">com.otakudesu.app</string>
 </resources>
