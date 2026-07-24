@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  // API_URL is no longer needed in standalone mode
-
+  // Prevent native context menu (long tap selection/link grabbing) EXCEPT on search inputs
+  document.addEventListener('contextmenu', event => {
+    if (event.target.tagName !== 'INPUT' && event.target.tagName !== 'TEXTAREA') {
+      event.preventDefault();
+    }
+  });
   const loader = document.getElementById('loader');
   const contentArea = document.getElementById('content-area');
   const searchInput = document.getElementById('search-input');
@@ -196,18 +200,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       // Save History
         saveHistory({ url: url, title: d.title });
         
-        let downloadsHTML = '';
-        if(d.downloads && d.downloads.length > 0) {
-          downloadsHTML = `<div class="downloads-section" style="margin-top:2rem;background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:12px">` +
-            `<h3 style="margin-bottom:1rem;border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:0.3rem">Link Download (Alternatif)</h3>` +
-            d.downloads.map(dl => `
-              <div style="margin-bottom:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem">
-                <strong style="color:var(--accent-hover);display:inline-block;width:50px;flex-shrink:0">${dl.resolution}</strong>
-                ${dl.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener noreferrer" style="color:#fff;background:rgba(255,255,255,0.1);padding:0.3rem 0.6rem;border-radius:4px;text-decoration:none;font-size:0.85rem;white-space:nowrap">${l.host}</a>`).join('')}
-              </div>
-            `).join('') +
-          `</div>`;
-        }
 
         contentArea.innerHTML = `
           <div class="episode-container">
@@ -220,7 +212,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               <a href="${d.all ? `#detail?url=${encodeURIComponent(d.all)}` : '#'}" class="nav-btn ${!d.all ? 'disabled' : ''}">Semua Episode</a>
               <a href="${d.next ? `#episode?url=${encodeURIComponent(d.next)}` : '#'}" class="nav-btn ${!d.next ? 'disabled' : ''}">Selanjutnya »</a>
             </div>
-            ${downloadsHTML}
           </div>
         `;
     } catch (e) {
