@@ -255,15 +255,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (json.data.length === 0 && page === 1) {
           contentArea.innerHTML = `<h2 style="text-align:center;margin:2rem 0">Genre: ${title}</h2><p style="text-align:center">Tidak ada hasil.</p>`;
         } else {
-          if(page === 1) {
+          if (page === 1) {
             contentArea.innerHTML = `<h2 style="text-align:center;margin:2rem 0">Genre: ${title}</h2><div class="grid" id="genre-grid">${html}</div>`;
+            window.genreLastItems = json.data.map(i => i.title).join();
           } else {
-            document.getElementById('genre-grid').innerHTML += html;
+            const currentItems = json.data.map(i => i.title).join();
+            if (currentItems === window.genreLastItems || json.data.length === 0) {
+              const btn = document.getElementById('load-more-btn');
+              if (btn) { btn.innerText = "Habis"; btn.disabled = true; btn.style.opacity = "0.5"; }
+              return;
+            }
+            window.genreLastItems = currentItems;
+            document.getElementById('genre-grid').insertAdjacentHTML('beforeend', html);
           }
+          
+          let existingBtn = document.getElementById('load-more-btn');
+          if (existingBtn) existingBtn.remove();
+          
           if (json.data.length >= 10) { 
-            const existingBtn = document.getElementById('load-more-btn');
-            if(existingBtn) existingBtn.remove();
-            contentArea.innerHTML += `<div style="text-align:center"><button id="load-more-btn" class="action-btn">Muat Lebih Banyak</button></div>`;
+            const btnHtml = `<div style="text-align:center" id="load-more-container"><button id="load-more-btn" class="action-btn">Muat Lebih Banyak</button></div>`;
+            contentArea.insertAdjacentHTML('beforeend', btnHtml);
             document.getElementById('load-more-btn').addEventListener('click', () => loadGenreDetail(url, title, page + 1));
           }
         }
