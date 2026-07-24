@@ -61,4 +61,7 @@ dependencies {
     
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.2")
+    
+    // Gson for SharedPreferences
+    implementation("com.google.code.gson:gson:2.10.1")
 }
