@@ -464,9 +464,15 @@ fun EpisodeScreen(navController: NavController, url: String) {
                                     settings.javaScriptEnabled = true
                                     settings.domStorageEnabled = true
                                     settings.mediaPlaybackRequiresUserGesture = false
+                                    settings.useWideViewPort = true
+                                    settings.loadWithOverviewMode = true
+                                    settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                                     webChromeClient = WebChromeClient()
                                     webViewClient = WebViewClient()
-                                    loadUrl(episode!!.streamUrl)
+                                    
+                                    val headers = mutableMapOf<String, String>()
+                                    headers["Referer"] = "https://otakudesu.blog/"
+                                    loadUrl(episode!!.streamUrl, headers)
                                 }
                             },
                             modifier = Modifier.fillMaxSize()
@@ -504,30 +510,6 @@ fun EpisodeScreen(navController: NavController, url: String) {
                             enabled = episode!!.nextUrl != null,
                             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFBB86FC))
                         ) { Text("Next »") }
-                    }
-
-                    // Download Links
-                    if (episode!!.downloads.isNotEmpty()) {
-                        Card(colors = CardDefaults.cardColors(containerColor = Color(0xFF1E1E1E)), modifier = Modifier.fillMaxWidth().padding(16.dp)) {
-                            Column(modifier = Modifier.padding(16.dp)) {
-                                Text("Link Download", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color(0xFFBB86FC), modifier = Modifier.padding(bottom = 12.dp))
-                                episode!!.downloads.forEach { dl ->
-                                    Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-                                        Text(dl.resolution, color = Color.White, fontWeight = FontWeight.Bold, modifier = Modifier.width(60.dp))
-                                        dl.links.forEach { link ->
-                                            Text(
-                                                text = link.host,
-                                                color = Color(0xFF03DAC5),
-                                                modifier = Modifier.padding(horizontal = 4.dp).clickable {
-                                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link.url))
-                                                    context.startActivity(intent)
-                                                }
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
                 }
             }

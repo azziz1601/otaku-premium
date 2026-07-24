@@ -108,8 +108,18 @@ object Scraper {
             val doc = Jsoup.connect(url).get()
             val title = doc.select(".venutama h1").text().trim()
             
-            val streamUrl = doc.select(".responsive-embed-stream iframe").attr("src").ifEmpty {
-                doc.select("#lightsVideo iframe").attr("src")
+            var streamUrl = doc.select(".responsive-embed-stream iframe").attr("src")
+            if (streamUrl.isEmpty()) {
+                streamUrl = doc.select("#lightsVideo iframe").attr("src")
+            }
+            if (streamUrl.isEmpty()) {
+                streamUrl = doc.select(".venutama iframe").attr("src")
+            }
+            if (streamUrl.isEmpty()) {
+                streamUrl = doc.select("iframe").firstOrNull()?.attr("src") ?: ""
+            }
+            if (streamUrl.startsWith("//")) {
+                streamUrl = "https:$streamUrl"
             }
             
             var next: String? = null
