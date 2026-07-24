@@ -489,21 +489,9 @@ fun EpisodeScreen(navController: NavController, url: String) {
                                     android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
                                     settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
                                     
-                                    val htmlData = """
-                                        <html>
-                                        <head>
-                                            <meta name="viewport" content="width=device-width, initial-scale=1">
-                                            <style>
-                                                body { margin: 0; padding: 0; background-color: #000; overflow: hidden; }
-                                                iframe { width: 100%; height: 100%; border: none; }
-                                            </style>
-                                        </head>
-                                        <body>
-                                            <iframe src="${episode!!.streamUrl}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
-                                        </body>
-                                        </html>
-                                    """.trimIndent()
-                                    loadDataWithBaseURL("https://otakudesu.blog/", htmlData, "text/html", "UTF-8", null)
+                                    val headers = mutableMapOf<String, String>()
+                                    headers["Referer"] = "https://otakudesu.blog/"
+                                    loadUrl(episode!!.streamUrl, headers)
                                 }
                             },
                             modifier = Modifier.fillMaxSize()
