@@ -469,7 +469,7 @@ fun EpisodeScreen(navController: NavController, url: String) {
                                     settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                                     webChromeClient = WebChromeClient()
                                     webViewClient = WebViewClient()
-                                    val htmlData = \"\"\"
+                                    val htmlData = """
                                         <html>
                                         <head>
                                             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -482,7 +482,7 @@ fun EpisodeScreen(navController: NavController, url: String) {
                                             <iframe src="${episode!!.streamUrl}" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
                                         </body>
                                         </html>
-                                    \"\"\".trimIndent()
+                                    """.trimIndent()
                                     loadDataWithBaseURL("https://otakudesu.blog/", htmlData, "text/html", "UTF-8", null)
                                 }
                             },
