@@ -465,10 +465,14 @@ fun EpisodeScreen(navController: NavController, url: String) {
                                     settings.domStorageEnabled = true
                                     settings.mediaPlaybackRequiresUserGesture = false
                                     settings.useWideViewPort = true
-                                    settings.loadWithOverviewMode = true
                                     settings.mixedContentMode = android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
                                     webChromeClient = WebChromeClient()
                                     webViewClient = WebViewClient()
+                                    
+                                    android.webkit.CookieManager.getInstance().setAcceptCookie(true)
+                                    android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(this, true)
+                                    settings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+                                    
                                     val htmlData = """
                                         <html>
                                         <head>
