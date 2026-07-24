@@ -28,11 +28,14 @@ data class ScheduleDay(val day: String, val animes: List<AnimeItem>)
 
 object Scraper {
     private const val BASE_URL = "https://otakudesu.blog"
+    private const val USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+
+    private fun getDocument(url: String) = Jsoup.connect(url).userAgent(USER_AGENT).get()
 
     suspend fun fetchHome(): List<AnimeItem> = withContext(Dispatchers.IO) {
         val items = mutableListOf<AnimeItem>()
         try {
-            val doc = Jsoup.connect(BASE_URL).get()
+            val doc = getDocument(BASE_URL)
             doc.select(".detpost").forEach { el ->
                 val title = el.select(".jdlflm").text()
                 val thumb = el.select("img").attr("src")
@@ -47,7 +50,7 @@ object Scraper {
     suspend fun fetchSearch(query: String): List<AnimeItem> = withContext(Dispatchers.IO) {
         val items = mutableListOf<AnimeItem>()
         try {
-            val doc = Jsoup.connect("$BASE_URL/?s=$query&post_type=anime").get()
+            val doc = getDocument("$BASE_URL/?s=$query&post_type=anime")
             doc.select(".chivsrc li").forEach { el ->
                 val title = el.select("h2 a").text()
                 val url = el.select("h2 a").attr("href")
@@ -60,7 +63,7 @@ object Scraper {
 
     suspend fun fetchDetail(url: String): AnimeDetail? = withContext(Dispatchers.IO) {
         try {
-            val doc = Jsoup.connect(url).get()
+            val doc = getDocument(url)
             
             var title = doc.select(".infozingle p").firstOrNull { it.text().contains("Judul") }?.text()?.replace("Judul:", "")?.trim()
             if (title.isNullOrEmpty()) title = doc.select(".info h1").text().trim()
@@ -105,7 +108,7 @@ object Scraper {
 
     suspend fun fetchEpisode(url: String): EpisodeDetail? = withContext(Dispatchers.IO) {
         try {
-            val doc = Jsoup.connect(url).get()
+            val doc = getDocument(url)
             val title = doc.select(".venutama h1").text().trim()
             
             var streamUrl = doc.select(".responsive-embed-stream iframe").attr("src")
@@ -155,7 +158,7 @@ object Scraper {
     suspend fun fetchSchedule(): List<ScheduleDay> = withContext(Dispatchers.IO) {
         val schedules = mutableListOf<ScheduleDay>()
         try {
-            val doc = Jsoup.connect("$BASE_URL/jadwal-rilis/").get()
+            val doc = getDocument("$BASE_URL/jadwal-rilis/")
             doc.select(".kgjdwl321").forEach { el ->
                 val day = el.select("h2").text().trim()
                 val animes = mutableListOf<AnimeItem>()
