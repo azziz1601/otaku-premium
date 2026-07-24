@@ -456,6 +456,22 @@ fun EpisodeScreen(navController: NavController, url: String) {
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 item {
+                    // Debug info
+                    Text(
+                        text = "URL: ${episode!!.streamUrl}",
+                        color = Color.Gray,
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                    Button(
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(episode!!.streamUrl))
+                            context.startActivity(intent)
+                        },
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
+                    ) { Text("Buka di Browser Eksternal") }
+
                     // Video Player
                     Box(modifier = Modifier.fillMaxWidth().aspectRatio(16f/9f).background(Color.Black)) {
                         AndroidView(
