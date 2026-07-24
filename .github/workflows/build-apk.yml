@@ -1,0 +1,35 @@
+name: Build Native Android APK
+
+on:
+  push:
+    branches: [ native ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Make gradlew executable
+      run: chmod +x ./gradlew
+
+    - name: Build APK
+      run: ./gradlew assembleDebug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: ZenimekuNative-APK
+        path: app/build/outputs/apk/debug/app-debug.apk
