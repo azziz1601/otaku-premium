@@ -1,0 +1,22 @@
+{
+  "name": "Otakudesu Premium",
+  "short_name": "OtakuVIP",
+  "description": "Nonton Anime Lancar Kualitas Premium",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f13",
+  "theme_color": "#1a6bb3",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://n.uguu.se/oDJkvhEi.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Play-logo-2012.svg/1024px-Play-logo-2012.svg.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

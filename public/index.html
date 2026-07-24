@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zenimeku - Streaming Anime Lancar</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a6bb3">
+  <link rel="apple-touch-icon" href="https://n.uguu.se/oDJkvhEi.jpg">
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="Web scraper Otakudesu dengan UI premium" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo" style="display:flex; align-items:center; gap:0.5rem;">
+        <img src="https://n.uguu.se/oDJkvhEi.jpg" alt="Logo" style="height:40px; border-radius:8px;">
+        Zenimeku<span>.App</span>
+      </a>
+      <div class="nav-links">
+        <a href="#">Home</a>
+        <a href="#schedule">Jadwal Rilis</a>
+        <a href="#watchlist">Riwayat & Bookmark</a>
+      </div>
+      <div class="search-bar" style="position:relative">
+        <input type="text" id="search-input" placeholder="Cari anime..." autocomplete="off" />
+        <button id="search-btn">Cari</button>
+        <div id="live-search-results" style="display:none;position:absolute;top:100%;left:0;right:0;background:#1a1a20;border:1px solid rgba(255,255,255,0.1);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.8);margin-top:0.5rem;z-index:100;max-height:300px;overflow-y:auto;flex-direction:column;gap:0.2rem;padding:0.5rem"></div>
+      </div>
+    </div>
+    <div class="genres-container" id="genres-container">
+      <!-- Genres will load here -->
+    </div>
+  </nav>
+
+  <main>
+    <section id="loader" class="loader">Loading...</section>
+    
+    <!-- Area for dynamic content -->
+    <div id="content-area"></div>
+  </main>
+
+  <footer>
+    <p>© 2026 Zenimeku Premium App</p>
+    <script src="scraper.js"></script>
+    <script src="app.js"></script>
+  </footer>
+</body>
+</html>
